@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Forging the Future Game UI</title>
+	<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			min-height: 100vh;
+			font-family: 'Montserrat', Arial, sans-serif;
+			overflow-x: hidden;
+		}
+		.bg-video {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			object-fit: cover;
+			z-index: -1;
+			pointer-events: none;
+		}
+		.settings-gear {
+			position: absolute;
+			top: 34px;
+			left: 87px;
+			font-size: 2rem;
+			background: #fff;
+			border-radius: 50%;
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+			cursor: pointer;
+			transition: background 0.2s;
+		}
+		.settings-gear:hover {
+			background: #f0f0f0;
+		}
+		.sun {
+			position: absolute;
+			top: 60px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 120px;
+			height: 120px;
+			background: #ffe066;
+			border-radius: 50%;
+			box-shadow: 0 4px 24px 0 #ffe06699;
+			border: 6px solid #fffbe6;
+		}
+		.player-icons {
+			position: absolute;
+			top: 140px;
+			left: 30px;
+			display: flex;
+			flex-direction: column;
+			gap: 18px;
+		}
+		.player-icon {
+			width: 48px;
+			height: 48px;
+			border-radius: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+			cursor: pointer;
+			border: 2px solid #fff;
+			transition: transform 0.15s;
+		}
+		.player-icon:hover {
+			transform: scale(1.08);
+		}
+		.player-red { background: #ff6b6b; }
+		.player-blue { background: #4dabf7; }
+		.player-green { background: #51cf66; }
+		.player-yellow { background: #ffe066; }
+		.player-icon span {
+			font-size: 2rem;
+			color: #fff;
+			text-shadow: 1px 1px 2px #0002;
+		}
+		.main-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+		}
+		.title {
+			margin-top: 180px;
+			font-family: 'Fredoka One', cursive;
+			font-size: 2.8rem;
+			color: #e0f7fa;
+			letter-spacing: 2px;
+			text-shadow: 2px 2px 8px #263159, 0 0 24px #000a;
+		}
+		.subtitle {
+			font-size: 1.4rem;
+			color: #b2ebf2;
+			font-weight: bold;
+			margin-bottom: 30px;
+			letter-spacing: 1px;
+			text-shadow: 1px 1px 8px #263159, 0 0 16px #000a;
+		}
+		.play-btn {
+			width: 160px;
+			height: 100px;
+			background: linear-gradient(135deg, #176a2a 60%, #11451b 100%);
+			border: 6px solid #d0f5e1;
+			border-radius: 18px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 30px auto;
+			box-shadow: 0 4px 32px #b71c1c88;
+			cursor: pointer;
+			transition: transform 0.15s, box-shadow 0.15s;
+		}
+		.play-btn:hover {
+			transform: scale(1.05);
+			box-shadow: 0 8px 48px #11451b88;
+			box-shadow: 0 8px 48px #11451bcc;
+		}
+		.play-btn .triangle {
+			width: 54px;
+			height: 54px;
+			background: #e1f5fe;
+			clip-path: polygon(25% 15%, 25% 85%, 85% 50%);
+			margin-left: 6px;
+		}
+		.menu-btns {
+			display: flex;
+			gap: 24px;
+			margin-bottom: 30px;
+		}
+		.menu-btn {
+			padding: 12px 28px;
+			font-size: 1rem;
+			font-weight: bold;
+			border-radius: 18px;
+			border: 2px solid #222;
+			background: rgba(255,255,255,0.35);
+			backdrop-filter: blur(16px);
+			-webkit-backdrop-filter: blur(16px);
+			color: #222;
+			box-shadow: 0 2px 8px #0001;
+			cursor: pointer;
+			transition: background 0.15s, color 0.15s, transform 0.12s;
+		}
+		.menu-btn:hover {
+			background: #ffe066;
+			color: #a86b2d;
+			transform: translateY(-2px) scale(1.04);
+		}
+		.streak-box {
+			position: absolute;
+			top: 56px;
+			right: 40px;
+			background: linear-gradient(90deg, #ffe066 60%, #51cf66 100%);
+			color: #263159;
+			font-weight: bold;
+			border-radius: 16px;
+			padding: 12px 28px;
+			font-size: 1.08rem;
+			box-shadow: 0 2px 16px #ffe06655, 0 2px 8px #51cf6622;
+			z-index: 20;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			cursor: pointer;
+			transition: transform 0.13s, box-shadow 0.13s;
+			border: 2px solid #fffbe6;
+		}
+		.streak-box:hover {
+			transform: scale(1.05) translateY(-2px);
+			box-shadow: 0 8px 32px #ffe06699, 0 4px 16px #51cf6699;
+		}
+		.streak-fire {
+			font-size: 1.5em;
+			margin-right: 6px;
+			animation: streakFirePulse 1.2s infinite alternate;
+		}
+		@keyframes streakFirePulse {
+			0% { filter: brightness(1);}
+			100% { filter: brightness(1.3);}
+		}
+		.streak-days {
+			font-size: 1.1em;
+			font-weight: 700;
+			letter-spacing: 1px;
+		}
+		.streak-mini-modal {
+			display: none;
+			position: absolute;
+			top: 54px;
+			right: 0;
+			background: rgba(255,255,255,0.98);
+			border-radius: 16px;
+			box-shadow: 0 8px 32px #ffe06655, 0 2px 12px #51cf6622;
+			padding: 1.2em 1.5em 1.2em 1.5em;
+			min-width: 260px;
+			z-index: 100;
+			animation: dropdownFade 0.22s;
+			font-family: 'Montserrat', Arial, sans-serif;
+		}
+		.streak-box.active + .streak-mini-modal,
+		.streak-mini-modal.show {
+			display: block !important;
+		}
+		.streak-mini-title {
+			font-family: 'Fredoka One', cursive, sans-serif;
+			font-size: 1.1em;
+			color: #176a2a;
+			font-weight: bold;
+			margin-bottom: 0.7em;
+			letter-spacing: 1px;
+		}
+		.streak-progress-bar-bg {
+			background: #e0f7fa;
+			border-radius: 8px;
+			height: 14px;
+			width: 100%;
+			margin: 0.5em 0 1em 0;
+			overflow: hidden;
+			position: relative;
+		}
+		.streak-progress-bar {
+			background: linear-gradient(90deg,#ffe066,#51cf66);
+			height: 100%;
+			transition: width 0.4s cubic-bezier(.4,2,.6,1);
+			border-radius: 8px;
+		}
+		.streak-milestones {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 0.5em;
+		}
+		.streak-milestone {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			font-size: 0.97em;
+			color: #263159;
+			position: relative;
+		}
+		.streak-milestone-dot {
+			width: 16px;
+			height: 16px;
+			border-radius: 50%;
+			background: #bdbdbd;
+			margin-bottom: 3px;
+			border: 2px solid #fff;
+			box-shadow: 0 2px 8px #ffe06633;
+			transition: background 0.3s;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.streak-milestone-dot.active {
+			background: #51cf66;
+			box-shadow: 0 2px 12px #51cf6688;
+		}
+		.streak-milestone-label {
+			font-size: 0.92em;
+			margin-top: 2px;
+		}
+		.streak-reward {
+			font-size: 1.5em;
+			margin-left: 6px;
+			color: #ff9800;
+			animation: streakRewardPulse 1.2s infinite alternate;
+		}
+		@keyframes streakRewardPulse {
+			0% { filter: drop-shadow(0 0 0 #ffe066);}
+			100% { filter: drop-shadow(0 0 8px #ffe066cc);}
+		}
+		.footer {
+			position: fixed;
+			left: 0;
+			bottom: 0;
+			width: 100vw;
+			height: 60px;
+			background: transparent;
+			display: flex;
+			align-items: flex-end;
+			justify-content: center;
+			z-index: 1;
+		}
+		.footer-dots {
+			width: 80vw;
+			height: 60px;
+			display: flex;
+			align-items: flex-end;
+			justify-content: space-between;
+		}
+		.footer-dot {
+			width: 18px;
+			height: 18px;
+			border-radius: 50%;
+			opacity: 0.4;
+		}
+		.dot-yellow { background: #ffe066; }
+		.dot-purple { background: #b197fc; }
+		.dot-pink { background: #ff6bcb; }
+		.dot-blue { background: #4dabf7; }
+		.dot-green { background: #51cf66; }
+		@media (max-width: 700px) {
+			.main-content { margin-top: 60px; }
+			.title { font-size: 2rem; }
+			.sun { width: 80px; height: 80px; }
+			.player-icon { width: 38px; height: 38px; }
+			.leaderboard, .streak-box { right: 10px; }
+		}
+		.find-game-modal {
+			display: none;
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100vw;
+			height: 100vh;
+			background: rgba(30, 41, 59, 0.25);
+			backdrop-filter: blur(2px);
+			justify-content: center;
+			align-items: center;
+		}
+		.find-game-modal.active {
+			display: flex;
+		}
+		.find-game-content {
+			background: rgba(255,255,255,0.75);
+			backdrop-filter: blur(18px) saturate(1.2);
+			border-radius: 18px;
+			box-shadow: 0 8px 32px #0002;
+			padding: 2.2em 2.5em 2em 2.5em;
+			min-width: 320px;
+			max-width: 90vw;
+			text-align: center;
+			position: relative;
+			animation: popin 0.25s;
+		}
+		.close-find-game {
+			position: absolute;
+			top: 16px;
+			right: 18px;
+			font-size: 1.7em;
+			color: #263159;
+			cursor: pointer;
+			transition: color 0.15s;
+			font-weight: bold;
+		}
+		.close-find-game:hover {
+			color: #b71c1c;
+		}
+		.find-game-content h2 {
+			margin-top: 0;
+			font-size: 1.3em;
+			color: #176a2a;
+			letter-spacing: 1px;
+			margin-bottom: 1.2em;
+		}
+		.find-game-input {
+			width: 80%;
+			padding: 0.7em 1em;
+			border-radius: 12px;
+			border: 1.5px solid #b2ebf2;
+			font-size: 1em;
+			margin-bottom: 1.2em;
+			outline: none;
+			box-shadow: 0 2px 8px #0001;
+			background: rgba(255,255,255,0.7);
+			transition: border 0.15s;
+		}
+		.find-game-input:focus {
+			border: 1.5px solid #176a2a;
+		}
+		.find-game-search-btn {
+			padding: 0.7em 2em;
+			border-radius: 12px;
+			border: none;
+			background: linear-gradient(135deg, #176a2a 60%, #11451b 100%);
+			color: #fff;
+			font-weight: bold;
+			font-size: 1em;
+			cursor: pointer;
+			box-shadow: 0 2px 8px #176a2a33;
+			transition: background 0.15s, transform 0.12s;
+			margin-bottom: 1em;
+		}
+		.find-game-search-btn:hover {
+			background: #11451b;
+			transform: scale(1.04);
+		}
+		.find-game-results {
+			margin-top: 1em;
+			color: #263159;
+			font-size: 1em;
+			min-height: 1.5em;
+		}
+		@keyframes popin {
+			0% { transform: scale(0.92); opacity: 0; }
+			100% { transform: scale(1); opacity: 1; }
+		}
+		.profile-btn {
+			position: absolute;
+			top: 30px;
+			left: 30px;
+			width: 48px;
+			height: 48px;
+			background: rgba(255,255,255,0.85);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+			cursor: pointer;
+			transition: background 0.2s, box-shadow 0.2s;
+			z-index: 10;
+		}
+		.profile-btn:hover {
+			background: #e0f7fa;
+			box-shadow: 0 4px 16px #4dabf799;
+		}
+		.profile-modal-avatar {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: linear-gradient(135deg, #4dabf7 60%, #51cf66 100%);
+			border-radius: 50%;
+			width: 64px;
+			height: 64px;
+			box-shadow: 0 4px 24px #4dabf755, 0 2px 12px #176a2a22;
+			margin-right: 1.2em;
+		}
+		.profile-modal-nickname {
+			font-size: 1.35em;
+			font-weight: 800;
+			color: #176a2a;
+			letter-spacing: 1px;
+			font-family: 'Fredoka One', cursive, sans-serif;
+		}
+		.profile-modal-level {
+			font-size: 1.08em;
+			color: #263159;
+			font-weight: 600;
+			margin-top: 2px;
+		}
+		.profile-modal-section-title {
+			font-weight: 700;
+			color: #176a2a;
+			font-size: 1.08em;
+			letter-spacing: 0.5px;
+			margin-bottom: 0.2em;
+		}
+		.profile-modal-progress-bar-bg {
+			background: #e0f7fa;
+			border-radius: 8px;
+			overflow: hidden;
+			height: 18px;
+			margin-top: 6px;
+		}
+		.profile-modal-progress-bar {
+			background: linear-gradient(90deg,#4dabf7,#51cf66);
+			height: 100%;
+			transition: width 0.4s cubic-bezier(.4,2,.6,1);
+		}
+		.profile-modal-progress-text {
+			font-size: 1em;
+			color: #263159;
+			margin-top: 2px;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+		}
+		.profile-modal-ranking {
+			font-size: 1.2em;
+			color: #ff9800;
+			font-weight: 800;
+			margin-top: 2px;
+			letter-spacing: 1px;
+			text-shadow: 0 2px 8px #fff, 0 0 2px #ff9800cc;
+		}
+		.profile-modal-ranking span {
+			color: #263159;
+			font-weight: 500;
+			font-size: 0.98em;
+			margin-left: 0.3em;
+		}
+		.start-btn {
+  width: 180px;
+  height: 70px;
+  background: linear-gradient(100deg, #ffe066 0%, #51cf66 100%);
+  border: none;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive, sans-serif;
+  font-size: 2.1rem;
+  color: #263159;
+  font-weight: bold;
+  letter-spacing: 2px;
+  box-shadow: 0 8px 32px #51cf6688, 0 2px 12px #ffe06655;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: bounceIn 1s cubic-bezier(.4,2,.6,1);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.start-btn span {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 2px 8px #fff, 0 0 8px #51cf6688;
+}
+.start-btn::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; right: 0; bottom: 0;
+  border-radius: 40px;
+  background: radial-gradient(circle at 60% 30%, #fffbe6 0%, transparent 70%);
+  opacity: 0.7;
+  z-index: 1;
+  pointer-events: none;
+}
+.start-btn:hover {
+  transform: scale(1.08) translateY(-4px);
+  box-shadow: 0 16px 48px #51cf66cc, 0 4px 24px #ffe06699;
+  animation: bounce 0.5s;
+}
+@keyframes bounceIn {
+  0% { transform: scale(0.7); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  80% { transform: scale(0.95);}
+  100% { transform: scale(1);}
+}
+@keyframes bounce {
+  0% { transform: scale(1.08) translateY(-4px);}
+  30% { transform: scale(0.95) translateY(2px);}
+  60% { transform: scale(1.1) translateY(-6px);}
+  100% { transform: scale(1.08) translateY(-4px);}
+}
+
+/* --- Profile Dropdown --- */
+.profile-dropdown {
+  display: none;
+  position: absolute;
+  top: 58px;
+  left: 0;
+  min-width: 210px;
+  background: rgba(255,255,255,0.98);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px #4dabf755, 0 2px 12px #176a2a22;
+  padding: 1em 1.2em 1em 1.2em;
+  z-index: 100;
+  animation: dropdownFade 0.22s;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+.profile-btn:hover + .profile-dropdown,
+.profile-dropdown:hover {
+  display: block;
+}
+.profile-dropdown .pd-nick {
+  font-family: 'Fredoka One', cursive, sans-serif;
+  font-size: 1.1em;
+  color: #176a2a;
+  font-weight: bold;
+  margin-bottom: 0.2em;
+}
+.profile-dropdown .pd-level {
+  color: #4dabf7;
+  font-size: 0.98em;
+  margin-bottom: 0.2em;
+}
+.profile-dropdown .pd-progress-bar-bg {
+  background: #e0f7fa;
+  border-radius: 8px;
+  height: 10px;
+  width: 100%;
+  margin: 0.2em 0 0.5em 0;
+  overflow: hidden;
+}
+.profile-dropdown .pd-progress-bar {
+  background: linear-gradient(90deg,#4dabf7,#51cf66);
+  height: 100%;
+  transition: width 0.4s cubic-bezier(.4,2,.6,1);
+}
+.profile-dropdown .pd-rank {
+  color: #ff9800;
+  font-size: 0.97em;
+  font-weight: 700;
+}
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* --- Settings Dropdown --- */
+.settings-dropdown {
+  display: none;
+  position: absolute;
+  top: 58px;
+  left: 0;
+  min-width: 180px;
+  background: rgba(255,255,255,0.98);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px #4dabf755, 0 2px 12px #176a2a22;
+  padding: 0.9em 1.1em 0.9em 1.1em;
+  z-index: 100;
+  animation: dropdownFade 0.22s;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+.settings-gear:hover + .settings-dropdown,
+.settings-dropdown:hover {
+  display: block;
+}
+.settings-dropdown .sd-row {
+  font-size: 0.98em;
+  margin-bottom: 0.5em;
+  color: #263159;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+.settings-dropdown .sd-row:last-child { margin-bottom: 0; }
+.settings-dropdown .sd-label {
+  font-weight: 600;
+  color: #176a2a;
+}
+.settings-dropdown .sd-value {
+  font-weight: 500;
+  color: #4dabf7;
+}
+.settings-dropdown .sd-dot {
+  width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 0.3em;
+}
+.settings-dropdown .sd-dot.on { background: #51cf66; }
+.settings-dropdown .sd-dot.off { background: #bdbdbd; }
+
+/* --- Leaderboard Styling --- */
+.leaderboard {
+    position: fixed;
+    bottom: 90px;
+    right: 40px;
+    width: 290px;
+    background: rgba(255,255,255,0.92);
+    border-radius: 18px 18px 24px 24px;
+    box-shadow: 0 8px 32px #4dabf755, 0 2px 12px #176a2a22;
+    padding: 1.2em 1.3em 1.1em 1.3em;
+    z-index: 30;
+    animation: popin 0.4s;
+    backdrop-filter: blur(8px);
+}
+.leaderboard-title {
+    font-family: 'Fredoka One', cursive, sans-serif;
+    font-size: 1.1em;
+    color: #176a2a;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 0.7em;
+    text-align: center;
+}
+.leaderboard-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6em 0.2em;
+    border-radius: 10px;
+    margin-bottom: 0.3em;
+    background: linear-gradient(90deg, #e0f7fa 60%, #fff 100%);
+    box-shadow: 0 2px 8px #4dabf711;
+    transition: background 0.18s, box-shadow 0.18s;
+    opacity: 0;
+    transform: translateX(40px);
+    animation: lbSlideIn 0.7s forwards;
+}
+.leaderboard-item:nth-child(1) { animation-delay: 0.2s; }
+.leaderboard-item:nth-child(2) { animation-delay: 0.5s; }
+.leaderboard-item:nth-child(3) { animation-delay: 0.8s; }
+.leaderboard-item:hover {
+    background: #ffe06644;
+    box-shadow: 0 4px 16px #ffe06633;
+}
+.lb-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: inline-block;
+}
+.lb-red { background: #ff6b6b; }
+.lb-green { background: #51cf66; }
+.lb-yellow { background: #ffe066; }
+.lb-name {
+    font-weight: 700;
+    color: #263159;
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    flex: 1;
+    margin-left: 2px;
+}
+.lb-score {
+    font-family: 'Fredoka One', cursive, sans-serif;
+    color: #4dabf7;
+    font-size: 1.08em;
+    font-weight: bold;
+    margin-left: 12px;
+}
+@keyframes lbSlideIn {
+    to { opacity: 1; transform: translateX(0);}
+}
+
+/* --- Streak Mini Modal Fix --- */
+.streak-box.active + .streak-mini-modal,
+.streak-mini-modal.show {
+    display: block !important;
+}
+.streak-mini-modal {
+    display: none;
+    position: absolute;
+    top: 54px;
+    right: 0;
+    background: rgba(255,255,255,0.98);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px #ffe06655, 0 2px 12px #51cf6622;
+    padding: 1.2em 1.5em 1.2em 1.5em;
+    min-width: 260px;
+    z-index: 100;
+    animation: dropdownFade 0.22s;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+.streak-mini-title {
+    font-family: 'Fredoka One', cursive, sans-serif;
+    font-size: 1.1em;
+    color: #176a2a;
+    font-weight: bold;
+    margin-bottom: 0.7em;
+    letter-spacing: 1px;
+}
+.streak-progress-bar-bg {
+    background: #e0f7fa;
+    border-radius: 8px;
+    height: 14px;
+    width: 100%;
+    margin: 0.5em 0 1em 0;
+    overflow: hidden;
+    position: relative;
+}
+.streak-progress-bar {
+    background: linear-gradient(90deg,#ffe066,#51cf66);
+    height: 100%;
+    transition: width 0.4s cubic-bezier(.4,2,.6,1);
+    border-radius: 8px;
+}
+.streak-milestones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5em;
+}
+.streak-milestone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.97em;
+    color: #263159;
+    position: relative;
+}
+.streak-milestone-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #bdbdbd;
+    margin-bottom: 3px;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px #ffe06633;
+    transition: background 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.streak-milestone-dot.active {
+    background: #51cf66;
+    box-shadow: 0 2px 12px #51cf6688;
+}
+.streak-milestone-label {
+    font-size: 0.92em;
+    margin-top: 2px;
+}
+.streak-reward {
+    font-size: 1.5em;
+    margin-left: 6px;
+    color: #ff9800;
+    animation: streakRewardPulse 1.2s infinite alternate;
+}
+@keyframes streakRewardPulse {
+	0% { filter: drop-shadow(0 0 0 #ffe066);}
+	100% { filter: drop-shadow(0 0 8px #ffe066cc);}
+}
+	</style>
+</head>
+<body>
+    <video class="bg-video" src="assets/video.mp4" autoplay loop muted playsinline poster="assets/placeholder-1.jpg"></video>
+    <div class="profile-btn" title="Profile" onmouseenter="showProfileDropdown()" onmouseleave="hideProfileDropdown()" onclick="openProfileMenu()">
+        <!-- Modern user icon SVG -->
+        <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="16" r="10" fill="#4dabf7" stroke="#fff" stroke-width="3"/>
+            <ellipse cx="24" cy="36" rx="14" ry="8" fill="#fff" stroke="#4dabf7" stroke-width="3"/>
+            <circle cx="24" cy="16" r="6" fill="#fff"/>
+        </svg>
+    </div>
+    <div class="profile-dropdown" id="profileDropdown" onmouseenter="showProfileDropdown()" onmouseleave="hideProfileDropdown()">
+      <div class="pd-nick" id="pdNick">PlayerOne</div>
+      <div class="pd-level">Level <span id="pdLevel">5</span></div>
+      <div class="pd-progress-bar-bg">
+        <div class="pd-progress-bar" id="pdProgressBar" style="width:60%"></div>
+      </div>
+      <div class="pd-rank">Rank: <span id="pdRank">#12</span></div>
+    </div>
+    <!-- Settings Gear Button (top left) -->
+<div class="settings-gear" title="Settings" id="settingsGear"
+     onmouseenter="showSettingsDropdown()" onmouseleave="hideSettingsDropdown()" onclick="openSettingsMenu()">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+    <circle cx="12" cy="12" r="10" stroke="#176a2a" stroke-width="2" fill="#fff"/>
+    <g stroke="#176a2a" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M12 2v2"/>
+      <path d="M12 20v2"/>
+      <path d="M4.93 4.93l1.41 1.41"/>
+      <path d="M17.66 17.66l1.41 1.41"/>
+      <path d="M2 12h2"/>
+      <path d="M20 12h2"/>
+      <path d="M4.93 19.07l1.41-1.41"/>
+      <path d="M17.66 6.34l1.41-1.41"/>
+    </g>
+  </svg>
+</div>
+<!-- Settings Dropdown (brief info) -->
+<div class="settings-dropdown" id="settingsDropdown"
+     style="left: 90px; top: 58px;"
+     onmouseenter="showSettingsDropdown()" onmouseleave="hideSettingsDropdown()">
+  <div class="sd-row"><span class="sd-label">Mode:</span> <span class="sd-value" id="sdMode">Light</span></div>
+  <div class="sd-row"><span class="sd-label">Music:</span> <span class="sd-dot" id="sdMusicDot"></span> <span class="sd-value" id="sdMusic">Off</span></div>
+  <div class="sd-row"><span class="sd-label">Difficulty:</span> <span class="sd-value" id="sdDifficulty">Medium</span></div>
+</div>
+	<div class="sun"><img src="assets/logo.png" alt="Logo" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:142px;height:142px;border-radius:50%;background:#fffbe603;"></div>
+	<div class="player-icons">
+		<div class="player-icon player-red" onclick="alert('Red player clicked!')"><span>🦄</span></div>
+		<div class="player-icon player-blue" onclick="alert('Blue player clicked!')"><span>👾</span></div>
+		<div class="player-icon player-green" onclick="alert('Green player clicked!')"><span>🤖</span></div>
+		<div class="player-icon player-yellow" onclick="alert('Yellow player clicked!')"><span>🐤</span></div>
+	</div>
+    <!-- Dynamic Streak Box -->
+    <div class="streak-box" id="streakBox" tabindex="0">
+        <span class="streak-fire">🔥</span>
+        <span class="streak-days" id="streakDaysText">STREAK: 1 DAY</span>
+    </div>
+    <div class="streak-mini-modal" id="streakMiniModal">
+        <div class="streak-mini-title">Streak Progress</div>
+        <div class="streak-progress-bar-bg">
+            <div class="streak-progress-bar" id="streakProgressBar" style="width:0%"></div>
+        </div>
+        <div class="streak-milestones">
+            <div class="streak-milestone">
+                <div class="streak-milestone-dot" id="milestone7"></div>
+                <div class="streak-milestone-label">7 Days</div>
+            </div>
+            <div class="streak-milestone">
+                <div class="streak-milestone-dot" id="milestone15"></div>
+                <div class="streak-milestone-label">15 Days</div>
+            </div>
+            <div class="streak-milestone">
+                <div class="streak-milestone-dot" id="milestone30"></div>
+                <div class="streak-milestone-label">30 Days</div>
+            </div>
+            <div class="streak-reward" title="Big Reward!">🏆</div>
+        </div>
+    </div>
+	<div class="leaderboard">
+		<div class="leaderboard-title">TODAY'S TOP RUNNERS</div>
+		<ul class="leaderboard-list">
+			<li class="leaderboard-item"><span class="lb-dot lb-red"></span><span class="lb-name">BeanBounce</span><span class="lb-score">2450</span></li>
+			<li class="leaderboard-item"><span class="lb-dot lb-green"></span><span class="lb-name">StumbleKing</span><span class="lb-score">1920</span></li>
+			<li class="leaderboard-item"><span class="lb-dot lb-yellow"></span><span class="lb-name">Tnejmblls</span><span class="lb-score">1720</span></li>
+		</ul>
+	</div>
+	<div class="main-content">
+		<div class="title">EduQuest</div>
+		<div class="subtitle">MULTIPLAYER</div>
+		<div class="start-btn" onclick="window.location.href='index.html'">
+        <span>Start</span>
+    </div>
+    <!-- Only the FIND GAME button remains below -->
+    <div class="menu-btns">
+        <button class="menu-btn" onclick="openFindGameMenu()">FIND GAME</button>
+    </div>
+    <!-- Find Game Popup Modal -->
+    <div id="findGameModal" class="find-game-modal">
+        <div class="find-game-content">
+            <span class="close-find-game" onclick="closeFindGameMenu()">&times;</span>
+            <h2>Find a Game</h2>
+            <input type="text" class="find-game-input" placeholder="Enter game code or search..." autofocus>
+            <button class="find-game-search-btn">Search</button>
+            <div class="find-game-results"></div>
+        </div>
+    </div>
+    <!-- Settings Popup Modal -->
+    <div id="settingsModal" class="find-game-modal">
+        <div class="find-game-content">
+            <span class="close-find-game" onclick="closeSettingsMenu()">&times;</span>
+            <h2>Settings</h2>
+            <div style="text-align:left; margin-bottom:1.2em;">
+                <label style="display:block; margin-bottom:0.7em;">
+                    <input type="checkbox" id="darkModeToggle" style="margin-right:0.6em;">
+                    Dark Mode
+                </label>
+                <label style="display:block; margin-bottom:0.7em;">
+                    <input type="checkbox" id="musicToggle" style="margin-right:0.6em;">
+                    Background Music
+                </label>
+            </div>
+            <div style="text-align:left;">
+                <label for="difficultySelect" style="font-weight:bold;">Game Difficulty:</label>
+                <select id="difficultySelect" style="margin-left:0.7em; border-radius:8px; padding:0.3em 1em;">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div class="find-game-results" id="settingsResult"></div>
+        </div>
+    </div>
+    <!-- Player Details Popup Modal -->
+    <div id="playerDetailsModal" class="find-game-modal">
+        <div class="find-game-content" style="min-width:320px;max-width:95vw;">
+            <h2 style="margin-bottom:1.1em;font-family:'Fredoka One',cursivesans-serif;font-size:1.6em;color:#4dabf7;letter-spacing:1px;">
+                Welcome! Enter Your Details
+            </h2>
+            <form id="playerDetailsForm" autocomplete="off">
+                <div style="margin-bottom:1.2em;">
+                    <label for="nicknameInput" style="font-weight:600;color:#176a2a;font-size:1.08em;letter-spacing:0.5px;">Nickname</label>
+                    <input type="text" id="nicknameInput" maxlength="16" required placeholder="Enter your nickname" style="width:90%;margin-top:0.5em;padding:0.7em 1em;border-radius:12px;border:1.5px solid #b2ebf2;font-size:1em;box-shadow:0 2px 8px #0001;background:rgba(255,255,255,0.7);transition:border 0.15s;">
+                </div>
+                <div style="margin-bottom:1.2em;">
+                    <label for="playerEmailInput" style="font-weight:600;color:#176a2a;font-size:1.08em;letter-spacing:0.5px;">Email Address</label>
+                    <input type="email" id="playerEmailInput" required placeholder="Enter your email" style="width:90%;margin-top:0.5em;padding:0.7em 1em;border-radius:12px;border:1.5px solid #b2ebf2;font-size:1em;box-shadow:0 2px 8px #0001;background:rgba(255,255,255,0.7);transition:border 0.15s;">
+                </div>
+                <button type="submit" class="find-game-search-btn" style="width:100%;margin-top:0.5em;">Start</button>
+            </form>
+        </div>
+    </div>
+</div>
+	<div class="footer">
+		<div class="footer-dots">
+			<div class="footer-dot dot-yellow"></div>
+			<div class="footer-dot dot-purple"></div>
+			<div class="footer-dot dot-pink"></div>
+			<div class="footer-dot dot-blue"></div>
+			<div class="footer-dot dot-green"></div>
+		</div>
+	</div>
+	<script>
+    function openFindGameMenu() {
+        document.getElementById('findGameModal').classList.add('active');
+        setTimeout(() => {
+            const input = document.querySelector('.find-game-input');
+            if(input) input.focus();
+        }, 100);
+    }
+    function closeFindGameMenu() {
+        document.getElementById('findGameModal').classList.remove('active');
+    }
+    function openSettingsMenu() {
+        document.getElementById('settingsModal').classList.add('active');
+    }
+    function closeSettingsMenu() {
+        document.getElementById('settingsModal').classList.remove('active');
+    }
+    function openProfileMenu() {
+        // --- Dynamically update cleared stages in profile ---
+        let unlocked = JSON.parse(localStorage.getItem('unlockedChapters')) || [1];
+        // Only count stages that are actually cleared (not just unlocked)
+        // Assume a stage is cleared if the previous one is unlocked (except stage 1)
+        let cleared = unlocked.filter(n => n !== 1 && unlocked.includes(n-1)).length + 1;
+        if (unlocked.length === 1 && unlocked[0] === 1) cleared = 0;
+        // Update profile information
+        document.getElementById('profileNickname').textContent = localStorage.getItem('playerNickname') || "PlayerOne";
+        document.getElementById('profileLevel').textContent = localStorage.getItem('playerLevel') || "1";
+        // Update progress bar and text
+        let totalStages = 8; // Change if you have more/less stages
+        document.getElementById('profileProgressBar').style.width = ((cleared/totalStages)*100) + "%";
+        document.getElementById('profileProgressText').textContent = cleared + " / " + totalStages + " Stages";
+        document.getElementById('profileModal').classList.add('active');
+    }
+    function closeProfileMenu() {
+        document.getElementById('profileModal').classList.remove('active');
+    }
+    // Show player details modal after 2 seconds if nickname not set
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            if (!localStorage.getItem('playerNickname')) {
+                document.getElementById('playerDetailsModal').classList.add('active');
+                document.getElementById('nicknameInput').focus();
+            }
+        }, 2000);
+
+        // Handle player details form submit
+        document.getElementById('playerDetailsForm').onsubmit = function(e) {
+            e.preventDefault();
+            const nickname = document.getElementById('nicknameInput').value.trim();
+            const email = document.getElementById('playerEmailInput').value.trim();
+            if (nickname.length < 2) {
+                document.getElementById('nicknameInput').style.border = "1.5px solid #b71c1c";
+                document.getElementById('nicknameInput').focus();
+                return false;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('playerEmailInput').style.border = "1.5px solid #b71c1c";
+                document.getElementById('playerEmailInput').focus();
+                return false;
+            }
+            localStorage.setItem('playerNickname', nickname);
+            localStorage.setItem('playerEmail', email);
+            document.getElementById('playerDetailsModal').classList.remove('active');
+            // Optionally update profile menu if open
+            document.getElementById('profileNickname').textContent = nickname;
+            return false;
+        };
+
+        // Optional: Demo search result
+        const btn = document.querySelector('.find-game-search-btn');
+        const input = document.querySelector('.find-game-input');
+        const results = document.querySelector('.find-game-results');
+        if(btn && input && results) {
+            btn.onclick = function() {
+                if(input.value.trim() === "") {
+                    results.textContent = "Please enter a game code or search term.";
+                } else {
+                    results.textContent = "🔍 Searching for \"" + input.value + "\" ...";
+                    setTimeout(() => {
+                        results.textContent = "No games found (demo).";
+                    }, 1200);
+                }
+            };
+            input.addEventListener('keydown', function(e) {
+                if(e.key === "Enter") btn.click();
+            });
+        }
+        // Settings demo: show a message when difficulty changes
+        const diff = document.getElementById('difficultySelect');
+        const settingsResult = document.getElementById('settingsResult');
+        if(diff && settingsResult) {
+            diff.onchange = function() {
+                settingsResult.textContent = "Difficulty set to: " + diff.value.charAt(0).toUpperCase() + diff.value.slice(1);
+                setTimeout(() => { settingsResult.textContent = ""; }, 1500);
+            };
+        }
+    });
+    // Optional: Close modal on ESC key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape") {
+            closeFindGameMenu();
+            closeSettingsMenu();
+            closeProfileMenu();
+            document.getElementById('playerDetailsModal').classList.remove('active');
+        }
+    });
+
+// --- Profile Dropdown Logic ---
+let profileDropdownTimeout;
+function showProfileDropdown() {
+  clearTimeout(profileDropdownTimeout);
+  document.getElementById('profileDropdown').style.display = 'block';
+  // Update info
+  document.getElementById('pdNick').textContent = localStorage.getItem('playerNickname') || "PlayerOne";
+  document.getElementById('pdLevel').textContent = localStorage.getItem('playerLevel') || "1";
+  let unlocked = JSON.parse(localStorage.getItem('unlockedChapters')) || [1];
+  let cleared = unlocked.filter(n => n !== 1 && unlocked.includes(n-1)).length + 1;
+  if (unlocked.length === 1 && unlocked[0] === 1) cleared = 0;
+  let totalStages = 8;
+  document.getElementById('pdProgressBar').style.width = ((cleared/totalStages)*100) + "%";
+  document.getElementById('pdRank').textContent = "#12";
+}
+function hideProfileDropdown() {
+  profileDropdownTimeout = setTimeout(() => {
+    document.getElementById('profileDropdown').style.display = 'none';
+  }, 120);
+}
+
+// --- Settings Dropdown Logic ---
+let settingsDropdownTimeout;
+function showSettingsDropdown() {
+  clearTimeout(settingsDropdownTimeout);
+  document.getElementById('settingsDropdown').style.display = 'block';
+  // Update info
+  document.getElementById('sdMode').textContent = document.getElementById('darkModeToggle')?.checked ? "Dark" : "Light";
+  let musicOn = document.getElementById('musicToggle')?.checked;
+  document.getElementById('sdMusic').textContent = musicOn ? "On" : "Off";
+  let dot = document.getElementById('sdMusicDot');
+  dot.className = "sd-dot " + (musicOn ? "on" : "off");
+  document.getElementById('sdDifficulty').textContent = document.getElementById('difficultySelect')?.value?.replace(/^\w/, c => c.toUpperCase()) || "Medium";
+}
+function hideSettingsDropdown() {
+  settingsDropdownTimeout = setTimeout(() => {
+    document.getElementById('settingsDropdown').style.display = 'none';
+  }, 120);
+}
+
+// Keep dropdowns open if hovered
+document.getElementById('profileDropdown').addEventListener('mouseenter', showProfileDropdown);
+document.getElementById('profileDropdown').addEventListener('mouseleave', hideProfileDropdown);
+document.getElementById('settingsDropdown').addEventListener('mouseenter', showSettingsDropdown);
+document.getElementById('settingsDropdown').addEventListener('mouseleave', hideSettingsDropdown);
+
+// Update dropdowns when toggles change
+document.addEventListener('DOMContentLoaded', function() {
+  // ...existing code...
+  document.getElementById('darkModeToggle')?.addEventListener('change', showSettingsDropdown);
+  document.getElementById('musicToggle')?.addEventListener('change', showSettingsDropdown);
+  document.getElementById('difficultySelect')?.addEventListener('change', showSettingsDropdown);
+});
+
+// --- Dynamic Streak Logic ---
+function getTodayDateStr() {
+    const today = new Date();
+    return today.getFullYear() + '-' + (today.getMonth()+1) + '-' + today.getDate();
+}
+function getStreakData() {
+    let streak = parseInt(localStorage.getItem('streakDays') || "1");
+    let lastLogin = localStorage.getItem('streakLastLogin');
+    let today = getTodayDateStr();
+    if (lastLogin !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        const ystr = yesterday.getFullYear() + '-' + (yesterday.getMonth()+1) + '-' + yesterday.getDate();
+        if (lastLogin === ystr) {
+            streak += 1;
+        } else {
+            streak = 1;
+        }
+        localStorage.setItem('streakDays', streak);
+        localStorage.setItem('streakLastLogin', today);
+    }
+    return streak;
+}
+function updateStreakUI() {
+    const streak = getStreakData();
+    const streakText = document.getElementById('streakDaysText');
+    streakText.textContent = `STREAK: ${streak} DAY${streak > 1 ? 'S' : ''}`;
+    // Progress bar
+    const bar = document.getElementById('streakProgressBar');
+    let percent = Math.min(streak/30, 1) * 100;
+    bar.style.width = percent + "%";
+    // Milestones
+    document.getElementById('milestone7').classList.toggle('active', streak >= 7);
+    document.getElementById('milestone15').classList.toggle('active', streak >= 15);
+    document.getElementById('milestone30').classList.toggle('active', streak >= 30);
+}
+function showStreakMiniModal() {
+    const modal = document.getElementById('streakMiniModal');
+    modal.classList.add('show');
+    updateStreakUI();
+}
+function hideStreakMiniModal() {
+    const modal = document.getElementById('streakMiniModal');
+    modal.classList.remove('show');
+}
+function toggleStreakMiniModal() {
+    const modal = document.getElementById('streakMiniModal');
+    if (modal.classList.contains('show')) {
+        hideStreakMiniModal();
+    } else {
+        showStreakMiniModal();
+    }
+}
+document.getElementById('streakBox').addEventListener('mouseenter', showStreakMiniModal);
+document.getElementById('streakBox').addEventListener('mouseleave', hideStreakMiniModal);
+document.getElementById('streakBox').addEventListener('click', toggleStreakMiniModal);
+document.getElementById('streakMiniModal').addEventListener('mouseenter', showStreakMiniModal);
+document.getElementById('streakMiniModal').addEventListener('mouseleave', hideStreakMiniModal);
+
+document.addEventListener('DOMContentLoaded', function() {
+    updateStreakUI();
+    // Retrigger leaderboard animation on page load
+    const lbItems = document.querySelectorAll('.leaderboard-item');
+    lbItems.forEach(item => {
+        item.style.animation = 'none';
+        item.offsetHeight; // trigger reflow
+        item.style.animation = '';
+    });
+});
+	</script>
+</body>
+</html>

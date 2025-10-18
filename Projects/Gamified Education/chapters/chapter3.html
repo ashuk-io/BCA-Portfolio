@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 1: The Beginning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #f3eadd;
+            --dark-color: #212121;
+            --light-container-bg: #e0c9a6;
+            --border-color: #5a3831;
+            --button-bg: #5a3831;
+        }
+
+        body {
+            background-color: var(--background-color);
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Header & Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 1.5em;
+            color: var(--dark-color);
+            margin: 0;
+        }
+
+        nav a {
+            color: var(--dark-color);
+            text-decoration: none;
+            margin-left: 15px;
+            font-size: 0.8em;
+        }
+
+        /* Main Banner Image */
+        .game-banner {
+            width: 100%;
+            border: 4px solid var(--dark-color);
+            box-sizing: border-box;
+            display: block;
+        }
+
+        /* Level Info Section */
+        .level-info {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .level-title-box {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px 10px;
+            font-size: 0.8em;
+            line-height: 1.6;
+        }
+        
+        .level-title-box h2 {
+            margin: 0;
+            padding-bottom: 5px;
+            font-size: 1em;
+        }
+
+        .play-now-btn {
+            background-color: var(--button-bg);
+            color: white;
+            border: 4px solid var(--dark-color);
+            padding: 20px 40px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 30px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        /* Gameplay Highlights */
+        .gameplay-highlights {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .gameplay-highlights h3 {
+            font-size: 1.1em;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+        }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .highlight-card {
+            background-color: var(--light-container-bg);
+            border: 4px solid var(--border-color);
+            padding: 20px 10px;
+        }
+
+        .highlight-card img {
+            height: 64px;
+            margin-bottom: 15px;
+        }
+
+        .highlight-card .caption {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 10px 5px;
+            font-size: 0.7em;
+            line-height: 1.4;
+        }
+
+        /* Player Tips & Map Section */
+        .player-info {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            align-items: stretch;
+        }
+        
+        .map-container {
+            flex: 1;
+            background-color: var(--light-container-bg);
+            border: 4px solid var(--border-color);
+            padding: 15px;
+        }
+
+        .map-container img {
+            width: 100%;
+            display: block;
+        }
+
+        .tips-container {
+            flex: 1.5;
+            background-color: var(--dark-color);
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .tips-container h3 {
+            margin: 0 0 15px 0;
+            font-size: 1em;
+        }
+        
+        .tips-container ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            font-size: 0.8em;
+            line-height: 2;
+        }
+        
+        .tips-container ul li::before {
+            content: "•";
+            color: white;
+            margin-right: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            nav a {
+                margin-left: 10px;
+                font-size: 0.6em;
+            }
+            header h1 {
+                font-size: 1.2em;
+            }
+            .player-info {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>STAGE 1</h1>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Levels</a>
+                <a href="#">About</a>
+                <a href="#">Play</a>
+                <a href="#">Contact</a>
+            </nav>
+        </header>
+
+        <main>
+            <img src="https://i.ibb.co/L5rK5n5/game-banner.png" alt="Pixel art game scene with a character in a forest in front of a stone doorway." class="game-banner">
+
+            <section class="level-info">
+                <div class="level-title-box">
+                    <h2>LEVEL 1: THE BEGINNING</h2>
+                    <p>START YOUR ADVENTURE IN THE MYSTERIOUS VILLAGE WHERE YOU'LL LEARN YOUR LESSONS WHILE HAVING FUN</p>
+                </div>
+                <a href="#" class="play-now-btn">PLAY NOW</a>
+            </section>
+
+            <section class="gameplay-highlights">
+                <h3>GAMEPLAY HIGHLIGHTS</h3>
+                <div class="highlights-grid">
+                    <div class="highlight-card">
+                        <img src="https://i.ibb.co/GvxYv1n/dpad.png" alt="Pixel art D-pad icon">
+                        <div class="caption">Introduction</div>
+                    </div>
+                    <div class="highlight-card">
+                        <img src="https://i.ibb.co/yQjK3W4/slime.png" alt="Pixel art green slime monster icon">
+                        <div class="caption">First Question Encounter</div>
+                    </div>
+                    <div class="highlight-card">
+                        <img src="https://i.ibb.co/MfZgK79/coin.png" alt="Pixel art gold coin icon">
+                        <div class="caption">Collectibles Rewards</div>
+                    </div>
+                    <div class="highlight-card">
+                        <img src="https://i.ibb.co/3kMvjK1/tree.png" alt="Pixel art tree icon">
+                        <div class="caption">Atmosphere Story</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="player-info">
+                <div class="map-container">
+                    <img src="https://i.ibb.co/n6R1mFc/map.png" alt="Simple pixel art map showing start and exit points.">
+                </div>
+                <div class="tips-container">
+                    <h3>PLAYER TIPS</h3>
+                    <ul>
+                        <li>Answer correctly</li>
+                        <li>collect points</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

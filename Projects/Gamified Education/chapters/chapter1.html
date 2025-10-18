@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Chapter 1: The Quest Begins</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #f9d342;
+        }
+
+        .progress-container {
+            width: 80%;
+            margin: 0 auto;
+            background: #555;
+            border-radius: 20px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #00e676;
+            transition: width 0.4s ease;
+        }
+
+        .card {
+            background: #1e1e2f;
+            border: 2px solid #4caf50;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card h2 {
+            color: #4caf50;
+        }
+
+        .hidden {
+            display: none;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        pre {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .quiz {
+            background: #29323c;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 10px;
+            border: 2px dashed #f9d342;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+
+        button {
+            display: none;
+            margin: 32px auto 0 auto;
+            padding: 1em 2.2em;
+            font-size: 1.2em;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff7eb3 0%, #ff758c 100%);
+            color: #fff;
+            border: none;
+            border-radius: 1.5em;
+            box-shadow: 0 2px 12px #ff7eb355;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+    </style>
+</head>
+
+<body>
+    
+<body>
+    <div id="dayNightToggle"
+        style="position:fixed;top:16px;right:16px;z-index:4000;display:flex;align-items:center;gap:0.5em;">
+        <label style="display:flex;align-items:center;cursor:pointer;gap:0.3em;">
+            <input type="checkbox" id="toggleMode" style="display:none;">
+            <span id="toggleIcon" style="font-size:1.7em;margin-left:0.5em;">🌞</span>
+        </label>
+    </div>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+        </div>
+        <ul>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <div class="heading-glass">
+        </div>
+
+        <div id="map-container">
+            <img id="map-image" src="map.png" alt="Course Map" />
+        </div>
+
+        <!-- Modal for locked stages (moved outside map-container) -->
+        <div id="lockedModal" class="modal">
+        </div>
+
+    </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('toggleMode');
+            const icon = document.getElementById('toggleIcon');
+            const mapImg = document.getElementById('map-image');
+            const body = document.body;
+            if (toggle && icon && mapImg) {
+                toggle.addEventListener('change', () => {
+                    if (toggle.checked) {
+                        mapImg.src = 'map1.png';
+                        icon.textContent = '🌙';
+                        body.style.background = "url('background1.png') center center / cover no-repeat fixed";
+                    } else {
+                        mapImg.src = 'map.png';
+                        icon.textContent = '🌞';
+                        body.style.background = "url('background.png') center center / cover no-repeat fixed";
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+    <header>
+        <h1>🐍 Python Quest: Chapter 1 - The Basics</h1>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="card" onclick="revealCard(this)">
+            <h2>🧙 What is Python?</h2>
+            <p class="hidden">Python is a high-level, interpreted programming language known for its readability and
+                versatility.</p>
+        </section>
+
+        <section class="card" onclick="revealCard(this)">
+            <h2>⚡ Features of Python</h2>
+            <ul class="hidden">
+                <li>Easy to learn</li>
+                <li>Interpreted</li>
+                <li>Dynamically typed</li>
+                <li>Portable</li>
+            </ul>
+        </section>
+
+        <section class="card" onclick="revealCard(this)">
+            <h2>👋 Your First Python Code</h2>
+            <pre class="hidden"><code>print("Hello, World!")</code></pre>
+        </section>
+
+        <section class="card" onclick="revealCard(this)">
+            <h2>🎯 Variables</h2>
+            <p class="hidden">Variables are like containers. Example:<br><code>name = "Alice"</code></p>
+        </section>
+
+        <section class="card" onclick="revealCard(this)">
+            <h2>🔢 Data Types</h2>
+            <ul class="hidden">
+                <li><code>int</code> - Integer</li>
+                <li><code>float</code> - Decimal</li>
+                <li><code>str</code> - String</li>
+                <li><code>bool</code> - Boolean</li>
+            </ul>
+        </section>
+
+        <section class="quiz">
+            <h2>🧠 Mini Quiz</h2>
+            <p>Coming soon! Earn XP by solving quizzes after each chapter.</p>
+        </section>
+
+        <button id="returnToMapBtn">Return to Map 🗺️</button>
+    </main>
+
+    <footer>
+        <p>Level up your Python skills! 🐍</p>
+    </footer>
+
+    <script>
+        let revealed = 0;
+
+        function revealCard(cardElement) {
+            const content = cardElement.querySelector(".hidden");
+            if (content.style.display === "block") return;
+
+            content.style.display = "block";
+            revealed++;
+            updateProgress();
+            checkCompletion();
+        }
+
+        function updateProgress() {
+            const total = document.querySelectorAll(".card").length;
+            const progress = (revealed / total) * 100;
+            document.getElementById("progressBar").style.width = progress + "%";
+        }
+
+        function checkCompletion() {
+            const total = document.querySelectorAll(".card").length;
+            if (revealed >= total) {
+                document.getElementById("returnToMapBtn").style.display = "block";
+            }
+        }
+
+        document.getElementById("returnToMapBtn").addEventListener("click", function () {
+            // Unlock next stage in localStorage
+            let unlocked = JSON.parse(localStorage.getItem('unlockedChapters')) || [1];
+            if (!unlocked.includes(2)) unlocked.push(2);
+            localStorage.setItem('unlockedChapters', JSON.stringify(unlocked));
+            window.location.href = '../index.html';
+        });
+    </script>
+</body>
+
+</html>
