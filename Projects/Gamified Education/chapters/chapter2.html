@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Python Quest: Chapter 2 - Variables & Data Types</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #222, #445, #667);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #f39c12;
+        }
+
+        .progress-container {
+            width: 80%;
+            margin: 0 auto;
+            background: #444;
+            border-radius: 20px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #8e44ad;
+            transition: width 0.4s ease;
+        }
+
+        .card {
+            background: #2c3e50;
+            border: 2px solid #8e44ad;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card h2 {
+            color: #8e44ad;
+        }
+
+        .hidden {
+            display: none;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        pre {
+            background: #333;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .quiz {
+            background: #34495e;
+            padding: 20px;
+            margin-top: 40px;
+            border-radius: 10px;
+            border: 2px dashed #f39c12;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 1.1rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🐍 Python Quest: Chapter 2 - Variables & Data Types</h1>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar2"></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="card" onclick="revealCard(this, 'progressBar2')">
+            <h2>🔢 Values & Types</h2>
+            <p class="hidden">Values are the basic units like numbers or text. Types classify them, e.g.
+                <code>int</code>, <code>float</code>, <code>str</code>. :contentReference[oaicite:0]{index=0}</p>
+        </section>
+
+        <section class="card" onclick="revealCard(this, 'progressBar2')">
+            <h2>✍️ Variables</h2>
+            <p class="hidden">Variables are names that refer to values. Example:<br><code>score = 10</code><br>You can
+                reassign them. :contentReference[oaicite:1]{index=1}</p>
+        </section>
+
+        <section class="card" onclick="revealCard(this, 'progressBar2')">
+            <h2>🧮 Variable Naming Rules & Keywords</h2>
+            <ul class="hidden">
+                <li>Start with a letter or underscore, not with a number. :contentReference[oaicite:2]{index=2}</li>
+                <li>Can include letters, digits, underscores. :contentReference[oaicite:3]{index=3}</li>
+                <li>Case-sensitive. :contentReference[oaicite:4]{index=4}</li>
+                <li>Cannot use Python reserved keywords (like <code>if</code>, <code>for</code>, etc.) as variable
+                    names. :contentReference[oaicite:5]{index=5}</li>
+            </ul>
+        </section>
+
+        <section class="card" onclick="revealCard(this, 'progressBar2')">
+            <h2>⚙️ Expressions & Statements</h2>
+            <p class="hidden">Expressions combine values and operators; statements are instructions.
+                Example:<br><code>total = x + y</code><br><code>print(total)</code>
+                :contentReference[oaicite:6]{index=6}</p>
+        </section>
+
+        <section class="card" onclick="revealCard(this, 'progressBar2')">
+            <h2>➕ Operators & Order of Operations</h2>
+            <ul class="hidden">
+                <li>Addition <code>(+)</code>, subtraction <code>(-)</code>, multiplication <code>(*)</code>, division
+                    <code>(/)</code>, exponentiation <code>(**)</code>. :contentReference[oaicite:7]{index=7}</li>
+                <li>Precedence matters — parentheses can change order. :contentReference[oaicite:8]{index=8}</li>
+            </ul>
+        </section>
+
+        <section class="quiz">
+            <h2>🧠 Mini Quiz</h2>
+            <p>Coming soon! Solve to earn extra XP.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Keep going — more power awaits in Chapter 3!</p>
+    </footer>
+
+    <script>
+        let revealed2 = 0;
+        function revealCard(cardElem, progressBarId) {
+            const content = cardElem.querySelector(".hidden");
+            if (content.style.display === "block") return;
+            content.style.display = "block";
+            revealed2++;
+            updateProgress(progressBarId);
+        }
+        function updateProgress(progressBarId) {
+            const total = document.querySelectorAll("section.card").length;
+            const progress = (revealed2 / total) * 100;
+            document.getElementById(progressBarId).style.width = progress + "%";
+        }
+    </script>
+</body>
+
+</html>
