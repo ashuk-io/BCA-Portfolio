@@ -1,3 +1,5 @@
+//Mean of 3 numbers using functions:
+
 #include<stdio.h>
 int mean(int,int,int);
 int mean(int a, int b, int c){
