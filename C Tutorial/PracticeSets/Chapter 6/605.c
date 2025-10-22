@@ -1,14 +1,28 @@
 #include<stdio.h>
  
-int cal(int,int);
-int cal(int a, int b){
-    printf("The sum = %d\n", a+b);
-    printf("Mean of the two numbers = %d\n", (a+b)/2);
-
+int* sum(int a, int b){
+    int sum = a+b;
+    int* ptr = &sum;
+    printf("The sum = %d\n",sum);
+    return ptr;
 }
+
+float* avg(int a, int b){
+    float avg = (a+b)/2.0;
+    float* ptr = &avg;
+    printf("Mean = %f\n", avg);
+    return ptr;
+}
+
+
 
 int main(){
     int x = 5 ; int y = 20;
-    cal(x,y);
+    int* ptr1; float* ptr2;
+    ptr1 = sum(x,y);
+    ptr2 = avg(x,y);
+
+    printf("The address of sum is %u and of avg is %u", ptr1, ptr2);
+    
     return 0;
 }
