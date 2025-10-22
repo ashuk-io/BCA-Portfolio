@@ -1,3 +1,6 @@
+# Ignore Google Drive and temporary drive upload files
+.tmpdriveupload
+gdrive*
 Projects/Gamified Education/EduQuest/
 # Ignore executables
 *.exe
