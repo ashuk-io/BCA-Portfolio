@@ -30,6 +30,7 @@ int main() {
         arr[i] = 5 * (i+1);
     }
     for ( int j = 0 ; j < 10; j++)
+    
     {
         printf("5 x %d = %d\n", j, 5*j);
     }
