@@ -27,27 +27,45 @@
 
 //OPTIMAL LOGIC :
 
+// int main(){
+//     int arr[3][10];
+//     for (int i = 0; i < 10; i++)
+//     {
+//         arr[0][i] = 3 * (i+1);
+//         printf("3 x %d = %d\n", i+1, arr[0][i]);
+
+//     }
+//     for (int j = 0; j < 10; j++)
+//     {
+//         arr[1][j] = 7 * (j+1);
+//         printf("7 x %d = %d\n", j+1, arr[1][j]);
+
+//     }
+//     for (int k = 0; k < 10; k++)
+//     {
+//         arr[2][k] = 9 * (k+1);
+//         printf("9 x %d = %d\n", k+1, arr[2][k]);
+
+//     }
+    
+    
+//     return 0;
+// }
+
+//Another Method ;
+
 int main(){
     int arr[3][10];
-    for (int i = 0; i < 10; i++)
-    {
-        arr[0][i] = 3 * (i+1);
-        printf("3 x %d = %d\n", i+1, arr[0][i]);
+    int mul[] = {3, 7, 9};
+    for (int i = 0; i < 3; i++){
+        printf("\n");
+        for (int j = 0; j < 10; j++){
+            arr[i][j] = mul[i] * (j+1);
+            printf("%d x %d = %d\n", mul[i], j+1, arr[i][j]);
+    }
 
     }
-    for (int j = 0; j < 10; j++)
-    {
-        arr[1][j] = 7 * (j+1);
-        printf("7 x %d = %d\n", j+1, arr[1][j]);
-
-    }
-    for (int k = 0; k < 10; k++)
-    {
-        arr[2][k] = 9 * (k+1);
-        printf("9 x %d = %d\n", k+1, arr[2][k]);
-
-    }
-    
-    
     return 0;
+
 }
+
