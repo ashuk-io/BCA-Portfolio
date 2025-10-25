@@ -7,7 +7,6 @@ struct employee
     float salary;
     char name[10];
 };
-
 int main(){
     struct employee e1,e2,e3;
     printf("Enter details of employee 1:\n");

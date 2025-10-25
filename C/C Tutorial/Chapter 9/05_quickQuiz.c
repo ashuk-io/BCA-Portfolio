@@ -14,7 +14,6 @@ void show( struct employee e){
     printf("Code: %d\n", e.code);
     printf("Salary: %f\n", e.salary);
 }
-
 int main(){
     struct employee e1;
     e1.code = 69;

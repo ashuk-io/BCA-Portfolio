@@ -20,7 +20,6 @@ int main(){
     strcpy(e1.name, "Ashu");
     printf("%d %f %s\n", e1.code, e1.salary, e1.name);
     printf("%d %f %s", ptr1->code, ptr1->salary, ptr1->name);
-
     return 0 ;
 
 }

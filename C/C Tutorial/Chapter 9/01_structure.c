@@ -7,8 +7,6 @@ struct employee
     char name[10];
 }; //semicolon is necessary here
 
-
-
 int main(){
     struct employee e1,e2;
     e1.code = 101;
