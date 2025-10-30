@@ -1,16 +1,16 @@
 #include <stdio.h>
 
 int main(){
-    int i, j, isPrime;
+    int i, j, prime;
     for (i = 2; i <= 100; i++){
-        isPrime = 1;
+        prime = 1;
         for (j = 2; j <= i/2; j++){
             if (i % j == 0){
-                isPrime = 0;
+                prime = 0;
                 break;
             }
         }
-        if (isPrime){
+        if (prime){
             printf("%d\n", i);
         }
     }
