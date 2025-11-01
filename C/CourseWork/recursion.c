@@ -12,6 +12,6 @@ int main(){
     int a = 6;
     printf("The factorial of %d is %d\n",a,factorial(a));
     return 0;
-}
+    }
 
 
