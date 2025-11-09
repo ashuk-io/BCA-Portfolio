@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Background Demo</title>
+<style>
+/* Apply background color to whole page */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Light blue background */
+}
+
+/* Section with solid background color */
+.color-section {
+    background-color: #4caf50; /* Green */
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+/* Section with background image */
+.image-section {
+    background-image: url("https://picsum.photos/1200/400"); /* Sample image */
+    background-repeat: no-repeat;
+    background-size: cover; /* Stretch image to cover entire div */
+    background-position: center;
+    color: white;
+    padding: 60px;
+    text-align: center;
+}
+
+/* Semi-transparent overlay for readability */
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* black with 50% transparency */
+    padding: 40px;
+    border-radius: 12px;
+    display: inline-block;
+    color: #fff;
+}
+</style>
+</head>
+<body>
+<div class="color-section">
+    <h1>Background Color Example</h1>
+    <p>This section uses a solid green background color.</p>
+</div>
+
+<div class="image-section">
+    <h2>Sharda School of Computing Science &amp; Engineering</h2>
+    <p>Department of Computer Science &amp; Applications</p>
+
+    <div class="overlay">
+        <h1>Background Image Example</h1>
+        <p>This section has a full-width background image with text overlay.</p>
+    </div>
+</div>
+</body>
+</html>
