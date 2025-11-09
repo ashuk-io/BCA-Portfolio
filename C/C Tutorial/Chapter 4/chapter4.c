@@ -26,19 +26,6 @@ int main()
     //     return 0;
     // }
 
-    // DO WHILE LOOP
-    //      int i = 1;
-    //      int n;
-    //      printf("Enter a number range  : ");
-    //      scanf("%d", &n);
-    //      do
-    //      {
-    //          printf("The value of i is %d \n", i);
-    //          i++;
-
-    //     } while (i <=4);
-    // }
-
     // For LOOP
 
 //     int n = 1;
